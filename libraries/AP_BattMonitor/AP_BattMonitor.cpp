@@ -353,12 +353,12 @@ bool AP_BattMonitor::consumed_wh(float &wh, const uint8_t instance) const {
 }
 
 /// capacity_remaining_pct - returns the % battery capacity remaining (0 ~ 100)
-uint8_t AP_BattMonitor::capacity_remaining_pct(uint8_t instance) const
+bool AP_BattMonitor::capacity_remaining_pct(int8_t &percentage, uint8_t instance) const
 {
     if (instance < _num_instances && drivers[instance] != nullptr) {
-        return drivers[instance]->capacity_remaining_pct();
+        return drivers[instance]->capacity_remaining_pct(percentage);
     } else {
-        return 0;
+        return false;
     }
 }
 
