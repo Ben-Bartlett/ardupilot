@@ -20,31 +20,32 @@ enum AutoSurfaceState {
 
 // Autopilot Yaw Mode enumeration
 enum autopilot_yaw_mode {
-    AUTO_YAW_HOLD =              0,  // pilot controls the heading
-    AUTO_YAW_LOOK_AT_NEXT_WP =   1,  // point towards next waypoint (no pilot input accepted)
-    AUTO_YAW_ROI =               2,  // point towards a location held in roi_WP (no pilot input accepted)
-    AUTO_YAW_LOOK_AT_HEADING =   3,  // point towards a particular angle (not pilot input accepted)
-    AUTO_YAW_LOOK_AHEAD =        4,  // point in the direction the vehicle is moving
-    AUTO_YAW_RESETTOARMEDYAW =   5,  // point towards heading at time motors were armed
-    AUTO_YAW_CORRECT_XTRACK =    6   // steer the sub in order to correct for crosstrack error during line following
+    AUTO_YAW_HOLD = 0,  // pilot controls the heading
+    AUTO_YAW_LOOK_AT_NEXT_WP = 1,  // point towards next waypoint (no pilot input accepted)
+    AUTO_YAW_ROI = 2,  // point towards a location held in roi_WP (no pilot input accepted)
+    AUTO_YAW_LOOK_AT_HEADING = 3,  // point towards a particular angle (not pilot input accepted)
+    AUTO_YAW_LOOK_AHEAD = 4,  // point in the direction the vehicle is moving
+    AUTO_YAW_RESETTOARMEDYAW = 5,  // point towards heading at time motors were armed
+    AUTO_YAW_CORRECT_XTRACK = 6   // steer the sub in order to correct for crosstrack error during line following
 };
 
 // Auto Pilot Modes enumeration
 enum control_mode_t {
-    STABILIZE =     0,  // manual angle with manual depth/throttle
-    ACRO =          1,  // manual body-frame angular rate with manual depth/throttle
-    ALT_HOLD =      2,  // manual angle with automatic depth/throttle
-    AUTO =          3,  // fully automatic waypoint control using mission commands
-    GUIDED =        4,  // fully automatic fly to coordinate or fly at velocity/direction using GCS immediate commands
-    CIRCLE =        7,  // automatic circular flight with automatic throttle
-    SURFACE =       9,  // automatically return to surface, pilot maintains horizontal control
-    POSHOLD =      16,  // automatic position hold with manual override, with automatic throttle
-    MANUAL =       19,  // Pass-through input with no stabilization
-    MOTOR_DETECT = 20   // Automatically detect motors orientation
+    STABILIZE = 0,  // manual angle with manual depth/throttle
+    ACRO = 1,  // manual body-frame angular rate with manual depth/throttle
+    ALT_HOLD = 2,  // manual angle with automatic depth/throttle
+    AUTO = 3,  // fully automatic waypoint control using mission commands
+    GUIDED = 4,  // fully automatic fly to coordinate or fly at velocity/direction using GCS immediate commands
+    CIRCLE = 7,  // automatic circular flight with automatic throttle
+    SURFACE = 9,  // automatically return to surface, pilot maintains horizontal control
+    POSHOLD = 16,  // automatic position hold with manual override, with automatic throttle
+    MANUAL = 19,  // Pass-through input with no stabilization
+    MOTOR_DETECT = 20,  // Automatically detect motors orientation
+    DYNA_POS = 24   // Ben , POSHOLD unless command given to move specific distances in surge,sway,heave and yaw
 };
 
 enum mode_reason_t {
-    MODE_REASON_UNKNOWN=0,
+    MODE_REASON_UNKNOWN = 0,
     MODE_REASON_TX_COMMAND,
     MODE_REASON_GCS_COMMAND,
     MODE_REASON_RADIO_FAILSAFE,

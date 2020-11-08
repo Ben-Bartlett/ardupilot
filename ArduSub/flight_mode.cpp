@@ -51,6 +51,12 @@ bool Sub::set_mode(control_mode_t mode, mode_reason_t reason)
         break;
 #endif
 
+#if DYNAPOS_ENABLED == ENABLED
+    case DYNA_POS:
+        success = dynapos_init();
+        break;
+#endif
+
     case MANUAL:
         success = manual_init();
         break;
@@ -90,7 +96,8 @@ bool Sub::set_mode(control_mode_t mode, mode_reason_t reason)
         // but it should be harmless to disable the fence temporarily in these situations as well
         fence.manual_recovery_start();
 #endif
-    } else {
+    }
+    else {
         // Log error that we failed to enter desired flight mode
         AP::logger().Write_Error(LogErrorSubsystem::FLIGHT_MODE, LogErrorCode(mode));
     }
@@ -135,6 +142,12 @@ void Sub::update_flight_mode()
 #if POSHOLD_ENABLED == ENABLED
     case POSHOLD:
         poshold_run();
+        break;
+#endif
+
+#if DYNAPOS_ENABLED == ENABLED
+    case DYNA_POS:
+        dynapos_run();
         break;
 #endif
 
@@ -203,8 +216,8 @@ bool Sub::mode_allows_arming(control_mode_t mode, bool arming_from_gcs)
     return (mode_has_manual_throttle(mode)
         || mode == ALT_HOLD
         || mode == POSHOLD
-        || (arming_from_gcs&& mode == GUIDED)
-    );
+        || (arming_from_gcs && mode == GUIDED)
+        );
 }
 
 // notify_flight_mode - sets notify object based on flight mode.  Only used for OreoLED notify device
