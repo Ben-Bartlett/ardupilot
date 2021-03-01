@@ -586,8 +586,8 @@ void GCS_MAVLINK_Sub::handleMessage(const mavlink_message_t &msg)
         mavlink_set_position_target_local_ned_t packet;
         mavlink_msg_set_position_target_local_ned_decode(&msg, &packet);
 
-        // exit if vehicle is not in Guided mode or Auto-Guided mode
-        if ((sub.control_mode != GUIDED) && !(sub.control_mode == AUTO && sub.auto_mode == Auto_NavGuided)) {
+        // exit if vehicle is not in Guided mode or Auto-Guided mode or DYNA_POS
+        if ((sub.control_mode != DYNA_POS) && (sub.control_mode != GUIDED) && !(sub.control_mode == AUTO && sub.auto_mode == Auto_NavGuided)) {
             break;
         }
 
@@ -662,7 +662,8 @@ void GCS_MAVLINK_Sub::handleMessage(const mavlink_message_t &msg)
         // exit if vehicle is not in Guided, Auto-Guided, or Depth Hold modes
         if ((sub.control_mode != GUIDED)
             && !(sub.control_mode == AUTO && sub.auto_mode == Auto_NavGuided)
-            && !(sub.control_mode == ALT_HOLD)) {
+            && !(sub.control_mode == ALT_HOLD) 
+            && !(sub.control_mode == DYNA_POS)) {
             break;
         }
 
@@ -679,6 +680,11 @@ void GCS_MAVLINK_Sub::handleMessage(const mavlink_message_t &msg)
 
         if (!pos_ignore && sub.control_mode == ALT_HOLD) { // Control only target depth when in ALT_HOLD
             sub.pos_control.set_alt_target(packet.alt*100);
+            break;
+        }
+        
+        if (!pos_ignore && sub.control_mode == DYNA_POS) { // Control only target depth when in DYNA_POS
+			sub.pos_control.set_alt_target(packet.alt*100);
             break;
         }
 
